@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>Gradle &lpar;Build tool&rpar; basics</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="gradle-build-tool-basics">Gradle (Build tool) basics</h1>
+<h2 id="1-gradle-introduction">1. Gradle Introduction</h2>
+<ul>
+<li><strong><ins>About / Introduction</ins></strong>
+<ul>
+<li>Gradle is the open source build system of choice for Java, Android, and Kotlin developers.</li>
+<li>From mobile apps to microservices, from small startups to big enterprises, it helps teams deliver better software, faster.</li>
+<li>It supports same project layout as Maven.</li>
+</ul>
+</li>
+<li><strong><ins>Features:</ins></strong>
+<ul>
+<li><strong>Build Anything:</strong>
+<ul>
+<li>Write in Java, Kotlin, C++, or any language of your choice. Package for deployment on any platform.</li>
+<li>Go monorepo or multi-repo. and rely on Gradle's unparalleled versatility to build it all.</li>
+</ul>
+</li>
+<li><strong>Automate Everything:</strong>
+<ul>
+<li>Completely programmable.
+<ul>
+<li>Support DSL (Domain specific language) <em>Groovy</em> <em>(used frequently)</em> and <em>Kotlin</em>.</li>
+</ul>
+</li>
+<li>Use Gradle's rich API and mature ecosystem of plugins and integrations to get ambitious about automation.</li>
+<li>Model, integrate and systematize the delivery of your software from end to end.</li>
+</ul>
+</li>
+<li><strong>Deliver Faster:</strong>
+<ul>
+<li>Balzing fast build, using advance strategies like
+<ul>
+<li><em>Compile aviodance to advanced caching.</em></li>
+<li><em>Can speed up Maven builds by upto 90%.</em>
+<ul>
+<li><strong>Incrementality:</strong> It runs only what is necessary e.g. <em>Compiles only changed files</em>.</li>
+<li><strong>Build Cache:</strong> Reuses the build outputs of other gradle builds with same inputs.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Scale out development with elegant, blazing-fast builds. From compile avoidance to advanced caching and beyond, we pursue performance relentlessly so your team can deliver continuously.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong><ins>References:</ins></strong>
+<ul>
+<li><a href="https://gradle.org/">https://gradle.org/</a></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="2-gradle-setup-todo">2. Gradle setup [<em>TODO</em>]</h2>
+<hr>
+<h2 id="3-create-first-gradle-project">3. Create First Gradle project</h2>
+<h3 id="project-ref-a1-gradle-basics">Project ref: <a href="a1-gradle-basics">a1-gradle-basics</a></h3>
+<ul>
+<li><strong><ins>About / Introduction</ins></strong>
+<ul>
+<li>We can create new project with gradle using the <em>IDE New Project</em> option or we can use <a href="https://start.spring.io/">https://start.spring.io/</a>.</li>
+<li><strong>Gradle Project using Spring portal</strong><center>
+  <img src="file:////home/srvivek/wrkspace/gradle-basics/01.documentation/images/01-gradle-project-creation.png" alt="Gradle Project Creation" title="Gradle Project Creation" width="900" height="400"/>
+</center>
+</li>
+<li><strong><ins>Note:</ins></strong>
+<ul>
+<li>Use Maven, if your build is simple (clean, install, test ....)</li>
+<li>Use Gradle, if build taking too much time or you want to customize the build.</li>
+</ul>
+</li>
+<li><strong>Important Gradle Files:</strong>
+<ul>
+<li><strong>build.gradle:</strong>
+<ul>
+<li>Contains:</li>
+<li>External dependencies for project.</li>
+<li>Remote repositories to check for dependencies.</li>
+<li>Tasks: <em>tasks.named('test')</em>, to define test platform.</li>
+<li><strong>Note:</strong>
+<ul>
+<li>At present <em>Eclipse doesn't support</em> auto download new dependency if added/updated in <em>build.gradle</em>.</li>
+<li>To reload the change --&gt; Right Click on Project --&gt; Gradle --&gt; Refresh Gradle Project.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>settings.gradle:</strong>
+<ul>
+<li>Contains project name with key <em><a href="http://rootProject.name">rootProject.name</a></em> equivalent to <em>artifactId</em> in <em>pom.xml</em>.
+<ul>
+<li><em><a href="http://rootProject.name">rootProject.name</a> = 'a1-gradle-basics'</em></li>
+</ul>
+</li>
+<li>Contains <em>PluginManagement</em> repositories.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>build.gradle: gradle plugins</strong>
+<ul>
+<li><strong>java pluging:</strong> <em>id 'java'</em>
+<ul>
+<li>Defines Java Compilation + Testing + Building capabilities.
+<ul>
+<li><strong>Default Layout:</strong>
+<ul>
+<li><em>Java Source:</em> <code>/src/main/java</code></li>
+<li><em>Production resources:</em> <code>/src/main/resources</code></li>
+<li><em>Test Java Source:</em> <code>/src/test/java</code></li>
+<li><em>Test resources:</em> <code>/src/test/resources</code></li>
+</ul>
+</li>
+<li><strong>Key Task:</strong>
+<ul>
+<li><em>build:</em> Help to build and create jars.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Spring Boot Gradle Plugin:</strong>
+<ul>
+<li>Packages executable Spring Boot jar.</li>
+<li>Build container image (bootJar, bootBuildImage)</li>
+<li>Use dependency management enabled by <code>spring-boot-dependencies</code>.</li>
+<li><strong>Plugin:</strong> <em>id 'org.springframework.boot' version '3.4.1'</em></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong><ins>build.gradle</ins></strong><pre><code class="language-gradle">    plugins {
+        id <span class="hljs-string">&#x27;java&#x27;</span>
+        id <span class="hljs-string">&#x27;org.springframework.boot&#x27;</span> version <span class="hljs-string">&#x27;3.4.1&#x27;</span>
+        id <span class="hljs-string">&#x27;io.spring.dependency-management&#x27;</span> version <span class="hljs-string">&#x27;1.1.7&#x27;</span>
+    }
+
+    <span class="hljs-keyword">group</span> = <span class="hljs-string">&#x27;com.srvivek.gradle&#x27;</span>
+    version = <span class="hljs-string">&#x27;0.0.1-SNAPSHOT&#x27;</span>
+
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(<span class="hljs-number">17</span>)
+        }
+    }
+
+    <span class="hljs-keyword">repositories</span> {
+        mavenCentral()
+        maven {
+            url <span class="hljs-string">&#x27;https://repo.spring.io/milestone&#x27;</span>
+        }
+    }
+
+    <span class="hljs-keyword">dependencies</span> {
+        implementation <span class="hljs-string">&#x27;org.springframework.boot:spring-boot-starter-web&#x27;</span>
+        developmentOnly <span class="hljs-string">&#x27;org.springframework.boot:spring-boot-devtools&#x27;</span>
+        testImplementation <span class="hljs-string">&#x27;org.springframework.boot:spring-boot-starter-test&#x27;</span>
+        testRuntimeOnly <span class="hljs-string">&#x27;org.junit.platform:junit-platform-launcher&#x27;</span>
+    }
+
+    tasks.named(<span class="hljs-string">&#x27;test&#x27;</span>) {
+        useJUnitPlatform()
+    }
+</code></pre>
+</li>
+<li><strong><ins>settings.gradle</ins></strong><pre><code class="language-gradle">    rootProject.name = <span class="hljs-string">&#x27;a1-gradle-basics&#x27;</span>
+</code></pre>
+</li>
+<li><strong><ins>References:</ins></strong>
+<ul>
+<li><a href="https://www.javatpoint.com/gradle-repository">https://www.javatpoint.com/gradle-repository</a></li>
+<li><a href="https://medium.com/@andrewMacmurray/a-beginners-guide-to-gradle-26212ddcafa8">https://medium.com/@andrewMacmurray/a-beginners-guide-to-gradle-26212ddcafa8</a></li>
+</ul>
+</li>
+</ul>
+<hr>
+
+            
+            
+        </body>
+        </html>
